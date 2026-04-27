@@ -38,5 +38,12 @@ export const CategoryModel = {
   async delete(id) {
     await pool.query('DELETE FROM categories WHERE id=$1', [id]);
     return { message: "Category dihapus" };
-  }
+  },
+  async getById(id) {
+  const result = await pool.query(
+    'SELECT * FROM categories WHERE id = $1',
+    [id]
+  );
+  return result.rows[0];
+}
 };

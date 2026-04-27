@@ -41,5 +41,19 @@ export const CategoryController = {
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
+  },
+  async getCategoryById(req, res) {
+  try {
+    const { id } = req.params;
+    const category = await CategoryModel.getById(id);
+
+    if (!category) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+
+    res.json(category);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
+}
 };

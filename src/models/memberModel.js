@@ -36,5 +36,12 @@ export const MemberModel = {
   async delete(id) {
     await pool.query('DELETE FROM members WHERE id=$1', [id]);
     return { message: "Member dihapus" };
-  }
+  },
+  async getById(id) {
+  const result = await pool.query(
+    'SELECT * FROM members WHERE id = $1',
+    [id]
+  );
+  return result.rows[0];
+}
 };

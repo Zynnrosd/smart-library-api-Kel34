@@ -49,5 +49,12 @@ export const BookModel = {
   async delete(id) {
     await pool.query('DELETE FROM books WHERE id=$1', [id]);
     return { message: "Book dihapus" };
-  }
+  },
+  async getById(id) {
+  const result = await pool.query(
+    'SELECT * FROM books WHERE id = $1',
+    [id]
+  );
+  return result.rows[0];
+}
 };

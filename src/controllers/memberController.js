@@ -41,5 +41,19 @@ export const MemberController = {
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
+  },
+  async getMemberById(req, res) {
+  try {
+    const { id } = req.params;
+    const member = await MemberModel.getById(id);
+
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
+    }
+
+    res.json(member);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
+}
 };

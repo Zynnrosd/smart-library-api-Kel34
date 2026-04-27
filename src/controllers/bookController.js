@@ -39,5 +39,19 @@ export const BookController = {
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
+  },
+  async getBookById(req, res) {
+  try {
+    const { id } = req.params;
+    const book = await BookModel.getById(id);
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.json(book);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
+}
 };
