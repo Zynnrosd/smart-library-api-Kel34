@@ -1,26 +1,16 @@
 import { LoanModel } from '../models/loanModel.js';
 
 export const LoanController = {
-  async createLoan(req, res) {
-    const { book_id, member_id, due_date } = req.body;
-    try {
-      const loan = await LoanModel.createLoan(book_id, member_id, due_date);
-      res.status(201).json({
-        message: "Peminjaman berhasil dicatat!",
-        data: loan
-      });
-    } catch (err) {
-      // Jika stok habis atau ID salah, kirim status 400 (Bad Request)
-      res.status(400).json({ error: err.message });
-    }
+  async create(req,res){
+    const {book_id,member_id,due_date}=req.body;
+    res.json(await LoanModel.createLoan(book_id,member_id,due_date));
   },
 
-  async getLoans(req, res) {
-    try {
-      const loans = await LoanModel.getAllLoans();
-      res.json(loans);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
+  async returnBook(req,res){
+    res.json(await LoanModel.returnBook(req.params.id));
+  },
+
+  async getAll(req,res){
+    res.json(await LoanModel.getAllLoans());
   }
 };

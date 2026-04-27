@@ -8,5 +8,6 @@ router.get('/', MemberController.getAllMembers);
 
 // POST /api/members
 router.post('/', MemberController.registerMember);
-
+router.put('/:id', MemberController.updateMember);
+router.delete('/:id', MemberController.deleteMember);
 export default router;

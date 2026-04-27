@@ -1,18 +1,43 @@
 import { CategoryModel } from '../models/categoryModel.js';
 
 export const CategoryController = {
+
   async getCategories(req, res) {
     try {
-      const categories = await CategoryModel.getAll();
+      const { name } = req.query;
+      const categories = await CategoryModel.getAll(name);
       res.json(categories);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
   },
+
   async addCategory(req, res) {
     try {
       const category = await CategoryModel.create(req.body.name);
       res.status(201).json(category);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  },
+
+  async updateCategory(req, res) {
+    try {
+      const { id } = req.params;
+      const { name } = req.body;
+
+      const data = await CategoryModel.update(id, name);
+      res.json(data);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  },
+
+  async deleteCategory(req, res) {
+    try {
+      const { id } = req.params;
+      await CategoryModel.delete(id);
+      res.json({ message: "Deleted" });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
